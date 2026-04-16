@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const lang = 'zh';
+---
+
+<Layout lang={lang}>
+  <Header lang={lang} />
+  
+  <main class="flex-1">
+    <section class="py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl">
+          <h1 class="font-mono text-3xl font-bold text-mono-50">关于 Roamy</h1>
+          
+          <p class="mt-6 text-mono-400 leading-relaxed">
+            Roamy 由 <strong class="text-mono-200">Kanata Labs LLC</strong> 构建。我们认为基于终端的工作流不应该被锁定在单一屏幕上。开发者运行的长期进程 &mdash; AI Agent、构建系统、数据库迁移 &mdash; 都需要跨设备的远程监控和交互。
+          </p>
+
+          <h2 class="mt-12 font-mono text-xl font-bold text-mono-100">工作原理</h2>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            Roamy 运行时创建持久化终端会话，由操作系统伪终端支持（Windows 上使用 ConPTY，Linux/macOS 上使用 PTY）。客户端通过 WebSocket 使用基于 Protobuf 的协议连接。运行时将终端输出捕获到屏幕缓冲区，并通过适配器管道处理，识别 TUI 程序并提取结构化状态。
+          </p>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            当检测到已知程序时，客户端可以从原始终端渲染切换到触控友好的操作界面。在手机上，你不再需要捏合缩放终端文字，而是看到可以直接点击的按钮、列表和状态指示器。运行时与客户端之间的所有流量均端到端加密。
+          </p>
+
+          <h2 class="mt-12 font-mono text-xl font-bold text-mono-100">架构</h2>
+          <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code>┌──────────┐  ┌──────────┐  ┌──────────┐
+│  移动端   │  │   Web    │  │   桌面端  │
+│  客户端   │  │  客户端   │  │   客户端  │
+└────┬─────┘  └────┬─────┘  └────┬─────┘
+     │             │             │
+     └─────── WebSocket ────────┘
+                   │
+          ┌────────▼────────┐
+          │    sessiond     │  ← 会话守护进程
+          │  (roamy-runtime)│  ← TUI 适配器框架
+          └────────┬────────┘
+                   │
+             ConPTY / PTY
+                   │
+          ┌────────▼────────┐
+          │  Shell / TUI    │  ← 你的程序
+          │  (bash, htop,   │
+          │   lazygit 等)   │
+          └─────────────────┘</code></pre>
+
+          <h2 class="mt-12 font-mono text-xl font-bold text-mono-100">开源策略</h2>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            核心系统 &mdash; 协议、运行时和 Web 客户端 &mdash; 以 Apache 2.0 协议开源。社区获得一个功能完整的远程终端系统和可扩展的适配器框架。任何人都可以为自己的 TUI 程序构建适配器。
+          </p>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            Kanata Labs 提供商业适配器包，预置对流行 TUI 程序的支持，以及原生移动端和桌面端客户端。
+          </p>
+
+          <h2 class="mt-12 font-mono text-xl font-bold text-mono-100">状态</h2>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            Roamy 正在积极开发中。运行时、协议和 Web 客户端已在 Windows 上可用。跨平台支持（Linux/macOS）和移动客户端在路线图中。欢迎在 <a href="https://github.com/RoamyDev" target="_blank" rel="noopener noreferrer" class="text-mono-200 underline hover:text-mono-50">GitHub</a> 上 star 关注项目进展！
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer lang={lang} />
+</Layout>

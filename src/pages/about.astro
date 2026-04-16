@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const lang = 'en';
+---
+
+<Layout lang={lang}>
+  <Header lang={lang} />
+  
+  <main class="flex-1">
+    <section class="py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl">
+          <h1 class="font-mono text-3xl font-bold text-mono-50">About Roamy</h1>
+          
+          <p class="mt-6 text-mono-400 leading-relaxed">
+            Roamy is built by <strong class="text-mono-200">Kanata Labs LLC</strong>. We believe terminal-based workflows shouldn't be locked to a single screen. Developers run long-lived processes &mdash; AI agents, build systems, database migrations &mdash; that benefit from remote monitoring and interaction across devices.
+          </p>
+
+          <h2 class="mt-12 font-mono text-xl font-bold text-mono-100">How It Works</h2>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            The Roamy runtime creates persistent terminal sessions backed by the OS pseudo-terminal (ConPTY on Windows, PTY on Linux/macOS). Clients connect over WebSocket using a Protobuf-based protocol. The runtime captures terminal output into a screen buffer and runs it through an adapter pipeline that can recognize TUI programs and extract structured state.
+          </p>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            When a known program is detected, clients can switch from raw terminal rendering to a touch-friendly interface optimized for the device. On a phone, instead of pinching and zooming on terminal text, you see buttons, lists, and status indicators you can actually tap. All traffic between runtime and clients is end-to-end encrypted.
+          </p>
+
+          <h2 class="mt-12 font-mono text-xl font-bold text-mono-100">Architecture</h2>
+          <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code>┌──────────┐  ┌──────────┐  ┌──────────┐
+│  Mobile  │  │   Web    │  │ Desktop  │
+│  Client  │  │  Client  │  │  Client  │
+└────┬─────┘  └────┬─────┘  └────┬─────┘
+     │             │             │
+     └─────── WebSocket ────────┘
+                   │
+          ┌────────▼────────┐
+          │    sessiond     │  ← Session daemon
+          │  (roamy-runtime)│  ← TUI adapter framework
+          └────────┬────────┘
+                   │
+             ConPTY / PTY
+                   │
+          ┌────────▼────────┐
+          │  Shell / TUI    │  ← Your programs
+          │  (bash, htop,   │
+          │   lazygit, etc) │
+          └─────────────────┘</code></pre>
+
+          <h2 class="mt-12 font-mono text-xl font-bold text-mono-100">Open Source Strategy</h2>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            The core system &mdash; protocol, runtime, and web client &mdash; is open source under Apache 2.0. This gives the community a fully functional remote terminal system with an extensible adapter framework. Anyone can build adapters for their own TUI programs.
+          </p>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            Kanata Labs provides a commercial adapter pack with pre-built support for popular TUI programs, as well as native mobile and desktop clients.
+          </p>
+
+          <h2 class="mt-12 font-mono text-xl font-bold text-mono-100">Status</h2>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            Roamy is a work in progress, under active development. The runtime, protocol, and web client are functional on Windows. Cross-platform support (Linux/macOS) and mobile clients are on the roadmap. Star the <a href="https://github.com/RoamyDev" target="_blank" rel="noopener noreferrer" class="text-mono-200 underline hover:text-mono-50">GitHub repos</a> to follow progress!
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer lang={lang} />
+</Layout>

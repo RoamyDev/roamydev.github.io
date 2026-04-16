@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const lang = 'en';
+---
+
+<Layout lang={lang}>
+  <Header lang={lang} />
+  
+  <main class="flex-1">
+    {/* Hero */}
+    <section class="relative overflow-hidden py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="font-mono text-4xl font-bold tracking-tight text-mono-50 sm:text-6xl">
+            Roamy
+          </h1>
+          <p class="mx-auto mt-6 max-w-2xl text-xl leading-relaxed text-mono-300">
+            Your terminal, from anywhere.
+          </p>
+          <p class="mx-auto mt-4 max-w-3xl text-base text-mono-500">
+            An open-source session runtime that lets you access terminal sessions from your phone, browser, or any device &mdash; with end-to-end encryption and multi-device support.
+          </p>
+          <div class="mt-10 flex justify-center gap-4">
+            <a
+              href="https://github.com/RoamyDev"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-full border border-mono-600 bg-mono-900 px-5 py-2.5 text-sm font-medium text-mono-200 transition-colors hover:border-mono-400 hover:text-mono-50"
+            >
+              GitHub &rarr;
+            </a>
+            <span class="rounded-full border border-mono-800 bg-mono-950 px-5 py-2.5 text-sm text-mono-500">
+              Work in Progress — actively developing
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* What is Roamy */}
+    <section class="border-t border-mono-800/50 py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl">
+          <h2 class="font-mono text-2xl font-bold text-mono-50">The Problem</h2>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            You SSH into a remote machine, start a long-running AI agent, then need to check on it from your phone. Or you're deep in a lazygit session and want to approve a merge from a mobile-friendly UI instead of squinting at raw terminal output.
+          </p>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            Today's tools make you choose: either a full terminal with tiny text on mobile, or give up and wait until you're back at your desk. There's no middle ground.
+          </p>
+          <h2 class="mt-12 font-mono text-2xl font-bold text-mono-50">The Approach</h2>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            Roamy is a <strong class="text-mono-200">session runtime</strong> that sits between your terminal and your devices. It captures terminal output, streams it over WebSocket, and &mdash; with an extensible adapter system &mdash; can parse the screen to understand <em>what program is running</em> and <em>what state it's in</em>.
+          </p>
+          <p class="mt-4 text-mono-400 leading-relaxed">
+            Clients can render touch-friendly interfaces for recognized programs, while always falling back to the raw terminal for everything else. All traffic between runtime and clients is end-to-end encrypted.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* Features */}
+    <section class="border-t border-mono-800/50 py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-center font-mono text-2xl font-bold text-mono-50">Core Capabilities</h2>
+        <div class="mx-auto mt-12 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          
+          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
+            <h3 class="font-mono text-lg font-medium text-mono-100">Remote Sessions</h3>
+            <p class="mt-2 text-sm text-mono-400">
+              Persistent terminal sessions accessible from any WebSocket-capable client. Attach, detach, and reconnect without losing state.
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
+            <h3 class="font-mono text-lg font-medium text-mono-100">End-to-End Encrypted</h3>
+            <p class="mt-2 text-sm text-mono-400">
+              All terminal traffic between runtime and clients is encrypted end-to-end. Your session data never travels in plaintext.
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
+            <h3 class="font-mono text-lg font-medium text-mono-100">Multi-Device</h3>
+            <p class="mt-2 text-sm text-mono-400">
+              Web, desktop, and mobile clients. Touch-friendly controls for recognized programs; raw terminal is always available as fallback.
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
+            <h3 class="font-mono text-lg font-medium text-mono-100">Rust Runtime</h3>
+            <p class="mt-2 text-sm text-mono-400">
+              Built in Rust for performance and safety. ConPTY on Windows, PTY on Linux/macOS. Protobuf wire protocol.
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
+            <h3 class="font-mono text-lg font-medium text-mono-100">Open Source Core</h3>
+            <p class="mt-2 text-sm text-mono-400">
+              Protocol, runtime, and web client are Apache 2.0. The core is fully usable as a standalone remote terminal system.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {/* Open Source */}
+    <section class="border-t border-mono-800/50 py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl">
+          <h2 class="font-mono text-2xl font-bold text-mono-50">Open Source</h2>
+          <p class="mt-4 text-mono-400">
+            The core system is open source under Apache 2.0. We are actively developing &mdash; star the repos to follow progress!
+          </p>
+          <div class="mt-8 space-y-3">
+            <a href="https://github.com/RoamyDev/roamy-protocol" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-lg border border-mono-800 bg-mono-900/30 px-5 py-3 transition-colors hover:border-mono-600">
+              <div>
+                <span class="font-mono text-sm font-medium text-mono-100">roamy-protocol</span>
+                <span class="ml-3 text-sm text-mono-500">Protobuf wire protocol definitions</span>
+              </div>
+              <span class="rounded-full bg-mono-800 px-2 py-0.5 text-xs text-mono-400">Apache 2.0</span>
+            </a>
+            <a href="https://github.com/RoamyDev/roamy-runtime" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-lg border border-mono-800 bg-mono-900/30 px-5 py-3 transition-colors hover:border-mono-600">
+              <div>
+                <span class="font-mono text-sm font-medium text-mono-100">roamy-runtime</span>
+                <span class="ml-3 text-sm text-mono-500">Session daemon + extensible adapter framework</span>
+              </div>
+              <span class="rounded-full bg-mono-800 px-2 py-0.5 text-xs text-mono-400">Apache 2.0</span>
+            </a>
+            <a href="https://github.com/RoamyDev/roamy-web" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-lg border border-mono-800 bg-mono-900/30 px-5 py-3 transition-colors hover:border-mono-600">
+              <div>
+                <span class="font-mono text-sm font-medium text-mono-100">roamy-web</span>
+                <span class="ml-3 text-sm text-mono-500">Browser terminal client</span>
+              </div>
+              <span class="rounded-full bg-mono-800 px-2 py-0.5 text-xs text-mono-400">Apache 2.0</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer lang={lang} />
+</Layout>

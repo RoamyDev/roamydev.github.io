@@ -1,0 +1,74 @@
+---
+import { ui, type UILanguage } from '../i18n/ui';
+
+interface Props {
+  lang: UILanguage;
+}
+
+const { lang } = Astro.props;
+const t = (key: keyof typeof ui.en) => ui[lang][key] || ui.en[key];
+
+const navItems = [
+  { href: `/${lang === 'en' ? '' : 'zh/'}`, label: t('nav.home') },
+  { href: `/${lang === 'en' ? '' : 'zh/'}about`, label: t('nav.about') },
+  { href: 'https://github.com/RoamyDev', label: 'GitHub', external: true },
+];
+
+const languages = [
+  { code: 'en', label: ui.en['lang.en'] },
+  { code: 'zh', label: ui.en['lang.zh'] },
+];
+
+const currentPath = Astro.url.pathname;
+const switchLangUrl = (targetLang: string) => {
+  if (targetLang === 'en') {
+    return currentPath.replace(/^\/zh/, '') || '/';
+  }
+  return '/zh' + currentPath.replace(/^\/zh/, '');
+};
+---
+
+<header class="sticky top-0 z-50 border-b border-mono-800 bg-mono-950/80 backdrop-blur-md">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      {/* Logo */}
+      <a href={`/${lang === 'en' ? '' : 'zh/'}`} class="flex items-center gap-2">
+        <span class="font-mono text-xl font-bold tracking-tight text-mono-50">Roamy</span>
+      </a>
+
+      {/* Navigation */}
+      <nav class="flex items-center gap-8">
+        <ul class="flex items-center gap-6">
+          {navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                class="text-sm font-medium text-mono-400 transition-colors hover:text-mono-50"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Language Switcher */}
+        <div class="flex items-center gap-1 rounded-full border border-mono-800 bg-mono-900/50 p-1">
+          {languages.map((l) => (
+            <a
+              href={switchLangUrl(l.code)}
+              class:list={[
+                'rounded-full px-3 py-1 text-xs font-medium transition-all',
+                lang === l.code
+                  ? 'bg-mono-100 text-mono-950'
+                  : 'text-mono-400 hover:text-mono-50',
+              ]}
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>

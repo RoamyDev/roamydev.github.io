@@ -1,0 +1,27 @@
+---
+import type { UILanguage } from '../i18n/ui';
+import '../styles/global.css';
+
+interface Props {
+  lang: UILanguage;
+}
+
+const { lang } = Astro.props;
+---
+<!doctype html>
+<html lang={lang} class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Roamy - Next-Generation Remote Development</title>
+    <meta name="description" content="Roamy is an open-source remote terminal session runtime with end-to-end encryption and multi-device support." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <slot />
+  </body>
+</html>
