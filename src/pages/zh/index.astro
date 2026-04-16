@@ -67,39 +67,39 @@ const lang = 'zh';
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 class="text-center font-mono text-2xl font-bold text-mono-50">核心能力</h2>
         <div class="mx-auto mt-12 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          
+
           <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">远程会话</h3>
+            <h3 class="font-mono text-lg font-medium text-mono-100">跨平台客户端</h3>
             <p class="mt-2 text-sm text-mono-400">
-              持久化终端会话，任何支持 WebSocket 的客户端都能访问。随时连接、断开、重连，不丢失状态。
+              原生桌面端、Web 端和 iOS 客户端 &mdash; 随时随地从任何设备访问你的终端。每个客户端都针对各自平台优化。
             </p>
           </div>
 
           <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
             <h3 class="font-mono text-lg font-medium text-mono-100">端到端加密</h3>
             <p class="mt-2 text-sm text-mono-400">
-              运行时与客户端之间的所有终端流量端到端加密。你的会话数据绝不以明文传输。
+              运行时与客户端之间的所有终端流量端到端加密。你的数据绝不以明文经过我们的服务器。
             </p>
           </div>
 
           <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">多设备</h3>
+            <h3 class="font-mono text-lg font-medium text-mono-100">支持自部署</h3>
             <p class="mt-2 text-sm text-mono-400">
-              Web、桌面和移动客户端。触控友好的操作界面适配已识别的程序，原始终端始终可用。
-            </p>
-          </div>
-
-          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">Rust 运行时</h3>
-            <p class="mt-2 text-sm text-mono-400">
-              Rust 构建，性能与安全并重。Windows 上使用 ConPTY，Linux/macOS 使用 PTY。Protobuf 线路协议。
+              在你自己的基础设施上运行。数据不经过我们的服务器 &mdash; 一切由你掌控。部署在防火墙后、本地机房或云端均可。
             </p>
           </div>
 
           <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
             <h3 class="font-mono text-lg font-medium text-mono-100">开源核心</h3>
             <p class="mt-2 text-sm text-mono-400">
-              协议、运行时和 Web 客户端采用 Apache 2.0 协议。核心系统可独立用作远程终端方案。
+              协议、运行时和 Web 客户端采用 Apache 2.0 协议。核心系统可独立用作远程终端方案。可审计、可 fork、可贡献。
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
+            <h3 class="font-mono text-lg font-medium text-mono-100">远程会话</h3>
+            <p class="mt-2 text-sm text-mono-400">
+              持久化终端会话。随时从任何设备连接、断开、重连，不丢失状态。Rust 构建，性能可靠。
             </p>
           </div>
 
@@ -126,7 +126,7 @@ const lang = 'zh';
             <a href="https://github.com/RoamyDev/roamy-runtime" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-lg border border-mono-800 bg-mono-900/30 px-5 py-3 transition-colors hover:border-mono-600">
               <div>
                 <span class="font-mono text-sm font-medium text-mono-100">roamy-runtime</span>
-                <span class="ml-3 text-sm text-mono-500">会话守护进程 + 可扩展适配器框架</span>
+                <span class="ml-3 text-sm text-mono-500">会话守护进程 + 核心运行时</span>
               </div>
               <span class="rounded-full bg-mono-800 px-2 py-0.5 text-xs text-mono-400">Apache 2.0</span>
             </a>

@@ -67,39 +67,39 @@ const lang = 'en';
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 class="text-center font-mono text-2xl font-bold text-mono-50">Core Capabilities</h2>
         <div class="mx-auto mt-12 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          
+
           <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">Remote Sessions</h3>
+            <h3 class="font-mono text-lg font-medium text-mono-100">Cross-Platform Clients</h3>
             <p class="mt-2 text-sm text-mono-400">
-              Persistent terminal sessions accessible from any WebSocket-capable client. Attach, detach, and reconnect without losing state.
+              Native desktop, web, and iOS clients &mdash; access your terminal from any device, anytime. Each client is optimized for its platform.
             </p>
           </div>
 
           <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
             <h3 class="font-mono text-lg font-medium text-mono-100">End-to-End Encrypted</h3>
             <p class="mt-2 text-sm text-mono-400">
-              All terminal traffic between runtime and clients is encrypted end-to-end. Your session data never travels in plaintext.
+              All terminal traffic between runtime and clients is encrypted end-to-end. Your data never passes through our servers in plaintext.
             </p>
           </div>
 
           <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">Multi-Device</h3>
+            <h3 class="font-mono text-lg font-medium text-mono-100">Self-Hosted</h3>
             <p class="mt-2 text-sm text-mono-400">
-              Web, desktop, and mobile clients. Touch-friendly controls for recognized programs; raw terminal is always available as fallback.
-            </p>
-          </div>
-
-          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">Rust Runtime</h3>
-            <p class="mt-2 text-sm text-mono-400">
-              Built in Rust for performance and safety. ConPTY on Windows, PTY on Linux/macOS. Protobuf wire protocol.
+              Run it on your own infrastructure. No data routes through our servers &mdash; you control everything. Deploy behind your firewall, on-prem, or in the cloud.
             </p>
           </div>
 
           <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
             <h3 class="font-mono text-lg font-medium text-mono-100">Open Source Core</h3>
             <p class="mt-2 text-sm text-mono-400">
-              Protocol, runtime, and web client are Apache 2.0. The core is fully usable as a standalone remote terminal system.
+              Protocol, runtime, and web client are Apache 2.0. Fully usable as a standalone remote terminal system. Audit, fork, contribute.
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
+            <h3 class="font-mono text-lg font-medium text-mono-100">Remote Sessions</h3>
+            <p class="mt-2 text-sm text-mono-400">
+              Persistent terminal sessions. Attach, detach, and reconnect from any device without losing state. Built on Rust for performance and reliability.
             </p>
           </div>
 
@@ -126,7 +126,7 @@ const lang = 'en';
             <a href="https://github.com/RoamyDev/roamy-runtime" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-lg border border-mono-800 bg-mono-900/30 px-5 py-3 transition-colors hover:border-mono-600">
               <div>
                 <span class="font-mono text-sm font-medium text-mono-100">roamy-runtime</span>
-                <span class="ml-3 text-sm text-mono-500">Session daemon + extensible adapter framework</span>
+                <span class="ml-3 text-sm text-mono-500">Session daemon + core runtime</span>
               </div>
               <span class="rounded-full bg-mono-800 px-2 py-0.5 text-xs text-mono-400">Apache 2.0</span>
             </a>
