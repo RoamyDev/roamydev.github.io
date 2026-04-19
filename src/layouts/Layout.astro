@@ -27,7 +27,7 @@ const { lang } = Astro.props;
       window.dataLayer = window.dataLayer || [];
       window.gtag = function(){window.dataLayer.push(arguments);}
       
-      // Set default consent to 'denied' for all categories
+      // Set default consent: denied for tracking, granted for security
       window.gtag('consent', 'default', {
         'ad_storage': 'denied',
         'ad_user_data': 'denied',
@@ -35,7 +35,7 @@ const { lang } = Astro.props;
         'analytics_storage': 'denied',
         'functionality_storage': 'denied',
         'personalization_storage': 'denied',
-        'security_storage': 'denied',
+        'security_storage': 'granted',  // Always granted (auth/fraud prevention)
       });
     </script>
     

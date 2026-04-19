@@ -40,8 +40,10 @@ function updateGtagConsent() {
     [SERVICE_AD_PERSONALIZATION]: CookieConsent.acceptedCategory(CAT_ADVERTISEMENT) ? 'granted' : 'denied',
     [SERVICE_FUNCTIONALITY_STORAGE]: CookieConsent.acceptedCategory(CAT_FUNCTIONALITY) ? 'granted' : 'denied',
     [SERVICE_PERSONALIZATION_STORAGE]: CookieConsent.acceptedCategory(CAT_PERSONALIZATION) ? 'granted' : 'denied',
-    // security_storage 始终保持 denied（安全相关，不应依赖用户同意）
-    [SERVICE_SECURITY_STORAGE]: 'denied',
+    // security_storage is always granted (Google recommendation)
+    // - Required for authentication, fraud prevention, CSRF tokens
+    // - Not subject to GDPR/cookie consent requirements
+    [SERVICE_SECURITY_STORAGE]: 'granted',
   });
 }
 
