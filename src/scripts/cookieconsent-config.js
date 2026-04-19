@@ -10,12 +10,17 @@ import 'vanilla-cookieconsent/dist/cookieconsent.css';
 const CAT_NECESSARY = 'necessary';
 const CAT_ANALYTICS = 'analytics';
 const CAT_ADVERTISEMENT = 'advertisement';
+const CAT_FUNCTIONALITY = 'functionality';
+const CAT_PERSONALIZATION = 'personalization';
 
 // Service constants (Google Consent Mode)
 const SERVICE_AD_STORAGE = 'ad_storage';
 const SERVICE_AD_USER_DATA = 'ad_user_data';
 const SERVICE_AD_PERSONALIZATION = 'ad_personalization';
 const SERVICE_ANALYTICS_STORAGE = 'analytics_storage';
+const SERVICE_FUNCTIONALITY_STORAGE = 'functionality_storage';
+const SERVICE_PERSONALIZATION_STORAGE = 'personalization_storage';
+const SERVICE_SECURITY_STORAGE = 'security_storage';
 
 /**
  * Update gtag consent based on user choices
@@ -33,6 +38,10 @@ function updateGtagConsent() {
     [SERVICE_AD_STORAGE]: CookieConsent.acceptedCategory(CAT_ADVERTISEMENT) ? 'granted' : 'denied',
     [SERVICE_AD_USER_DATA]: CookieConsent.acceptedCategory(CAT_ADVERTISEMENT) ? 'granted' : 'denied',
     [SERVICE_AD_PERSONALIZATION]: CookieConsent.acceptedCategory(CAT_ADVERTISEMENT) ? 'granted' : 'denied',
+    [SERVICE_FUNCTIONALITY_STORAGE]: CookieConsent.acceptedCategory(CAT_FUNCTIONALITY) ? 'granted' : 'denied',
+    [SERVICE_PERSONALIZATION_STORAGE]: CookieConsent.acceptedCategory(CAT_PERSONALIZATION) ? 'granted' : 'denied',
+    // security_storage 始终保持 denied（安全相关，不应依赖用户同意）
+    [SERVICE_SECURITY_STORAGE]: 'denied',
   });
 }
 
@@ -89,6 +98,15 @@ export function initCookieConsent(lang = 'en') {
         enabled: false,
         readOnly: false,
       },
+      // Future-ready categories (disabled by default, enable when needed)
+      [CAT_FUNCTIONALITY]: {
+        enabled: false,
+        readOnly: false,
+      },
+      [CAT_PERSONALIZATION]: {
+        enabled: false,
+        readOnly: false,
+      },
     },
     
     // Language configuration
@@ -127,6 +145,16 @@ export function initCookieConsent(lang = 'en') {
                 description: 'These cookies are used to deliver relevant advertisements.',
                 linkedCategory: CAT_ADVERTISEMENT,
               },
+              {
+                title: 'Functional cookies',
+                description: 'These cookies enable enhanced functionality and personalization.',
+                linkedCategory: CAT_FUNCTIONALITY,
+              },
+              {
+                title: 'Personalization cookies',
+                description: 'These cookies remember your preferences and settings.',
+                linkedCategory: CAT_PERSONALIZATION,
+              },
             ],
           },
         },
@@ -161,6 +189,16 @@ export function initCookieConsent(lang = 'en') {
                 title: '广告 Cookie',
                 description: '这些 Cookie 用于提供相关广告。',
                 linkedCategory: CAT_ADVERTISEMENT,
+              },
+              {
+                title: '功能 Cookie',
+                description: '这些 Cookie 提供增强功能和个性化体验。',
+                linkedCategory: CAT_FUNCTIONALITY,
+              },
+              {
+                title: '个性化 Cookie',
+                description: '这些 Cookie 记住您的偏好和设置。',
+                linkedCategory: CAT_PERSONALIZATION,
               },
             ],
           },
