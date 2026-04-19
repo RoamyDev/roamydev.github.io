@@ -11,6 +11,7 @@ const t = (key: keyof typeof ui.en) => ui[lang][key] || ui.en[key];
 const navItems = [
   { href: `/${lang === 'en' ? '' : 'zh/'}`, label: t('nav.home') },
   { href: `/${lang === 'en' ? '' : 'zh/'}about`, label: t('nav.about') },
+  { href: `/${lang === 'en' ? '' : 'zh/'}docs/`, label: t('nav.docs') },
   { href: 'https://github.com/RoamyDev', label: 'GitHub', external: true },
 ];
 

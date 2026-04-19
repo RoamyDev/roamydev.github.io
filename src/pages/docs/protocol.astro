@@ -1,0 +1,138 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+const lang = 'en';
+
+const codeStreamTypes = `STREAM_TYPE_SESSION    = 1  // Session lifecycle messages
+STREAM_TYPE_TERMINAL   = 2  // Terminal I/O
+STREAM_TYPE_CONTROL    = 3  // Auth, pairing, heartbeats
+STREAM_TYPE_SEMANTIC   = 4  // Shell facts, agent signals
+STREAM_TYPE_GIT        = 5  // Git status and diffs`;
+
+const codeSessionLifecycle = `Session States:
+  RUNNING     = 1  // Active session with PTY
+  DETACHED    = 2  // No clients attached (session persists)
+  TERMINATED  = 3  // PTY process exited
+
+Client → Server:
+  CreateSessionRequest   { host_id, client_id, cols, rows, shell_path }
+  AttachSessionRequest   { session_ref, client_id, cols, rows, last_seen_offset }
+  DetachSessionRequest   { session_ref, client_id }
+  DestroySessionRequest  { session_ref }
+  ListSessionsRequest    { host_id }
+
+Server → Client:
+  CreateSessionResponse  { session_info }
+  AttachSessionResponse  { session_info, replay_data }
+  ListSessionsResponse   sessions: [SessionInfo]`;
+
+const codeTerminalIO = `// Server → Client: terminal output
+TerminalChunk { session_ref, data, offset, timestamp }
+
+// Client → Server: keyboard/paste input
+InputEvent { session_ref, data, source_client_id, input_type }
+  input_type: KEYBOARD = 1, PASTE = 2, MOUSE = 3
+
+// Client → Server: terminal resize
+ResizeEvent { session_ref, source_client_id, cols, rows }`;
+
+const codeControlAuth = `// Client → Server: authenticate device
+DeviceAuthRequest  { device_id, device_token, protocol_version }
+DeviceAuthResponse { accepted, reject_reason, server_protocol_version }
+
+// Server → Client: pairing info
+PairingCodeIssued  { host_id, code, expires_at, qr_data }
+DevicePaired       { host_id, device_id, device_name, account_id }
+
+// Bidirectional: keep-alive
+Heartbeat { timestamp }
+
+// Server → Client: reconnect hint
+ReconnectHint { session_id, last_seen_offset }`;
+
+const codeSemantic = `// Shell integration events
+ShellFactEvent {
+  cwd_changed:    { path }
+  command_started: { command_line, command_id }
+  command_ended:   { command_id, exit_code }
+}
+
+// AI agent activity signals
+AgentSignal { session_id, timestamp, agent_kind, state, tool_name, raw_context }
+  state: IDLE = 1, THINKING = 2, TOOL_CALLING = 3, WAITING_APPROVAL = 4, ERROR = 5`;
+
+const codeRustDep = `# Cargo.toml
+[dependencies]
+roamy-protocol = { path = "../roamy-protocol" }`;
+
+const codeJsProto = `# In roamy-web
+npm run proto   # Generates src/proto.js via pbjs`;
+---
+
+<DocsLayout lang={lang}>
+  <h1 class="font-mono text-3xl font-bold text-mono-50">Protocol</h1>
+  <p class="mt-4 text-mono-400 leading-relaxed">
+    Roamy uses a Protobuf-based wire protocol transported over WebSocket (or Unix domain socket). Every binary frame is an <code class="text-mono-200">Envelope</code> message containing a typed payload and metadata.
+  </p>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Proto Definitions</h2>
+  <div class="mt-4 overflow-x-auto">
+    <table class="w-full text-sm text-mono-400">
+      <thead><tr class="border-b border-mono-800 text-left"><th class="pb-2 pr-6 font-mono text-mono-200">File</th><th class="pb-2 font-mono text-mono-200">Description</th></tr></thead>
+      <tbody class="divide-y divide-mono-800/50">
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>envelope.proto</code></td><td class="py-2">Top-level message wrapper with stream type, sequence number, and timestamp</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>session.proto</code></td><td class="py-2">Session lifecycle: create, attach, detach, destroy, list</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>terminal.proto</code></td><td class="py-2">Terminal I/O: output chunks, keyboard input, resize events</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>control.proto</code></td><td class="py-2">Control: device auth, pairing, reconnect hints, heartbeats</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>semantic.proto</code></td><td class="py-2">Shell integration: cwd changes, command lifecycle, agent signals</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>git.proto</code></td><td class="py-2">Git metadata: branch status, file changes, diff previews</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Envelope Pattern</h2>
+  <p class="mt-3 text-sm text-mono-400">
+    All messages are wrapped in an <code class="text-mono-200">Envelope</code> with:
+  </p>
+  <ul class="mt-2 list-disc space-y-1 pl-6 text-sm text-mono-400">
+    <li><code class="text-mono-200">protocol_version</code> &mdash; Version for forward compatibility (currently 1)</li>
+    <li><code class="text-mono-200">stream_type</code> &mdash; Logical stream for routing (session, terminal, control, semantic, git)</li>
+    <li><code class="text-mono-200">sequence</code> &mdash; Monotonic sequence number per connection</li>
+    <li><code class="text-mono-200">timestamp</code> &mdash; Message timestamp</li>
+    <li><code class="text-mono-200">payload</code> &mdash; Oneof union of all message types</li>
+  </ul>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Stream Types</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code set:html={codeStreamTypes} /></pre>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Session Lifecycle</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code set:html={codeSessionLifecycle} /></pre>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Terminal I/O</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code set:html={codeTerminalIO} /></pre>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Control &amp; Auth</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code set:html={codeControlAuth} /></pre>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Semantic Events</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code set:html={codeSemantic} /></pre>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Design Principles</h2>
+  <ul class="mt-4 list-disc space-y-1 pl-6 text-sm text-mono-400">
+    <li><strong class="text-mono-200">Language-agnostic</strong> &mdash; Protobuf ensures clients in any language can implement the protocol</li>
+    <li><strong class="text-mono-200">Stable wire format</strong> &mdash; Breaking changes require explicit version bumps</li>
+    <li><strong class="text-mono-200">Envelope multiplexing</strong> &mdash; All streams on a single WebSocket connection</li>
+    <li><strong class="text-mono-200">Replay support</strong> &mdash; Monotonic byte offsets enable reconnection with scrollback replay</li>
+  </ul>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Usage in Rust</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code set:html={codeRustDep} /></pre>
+  <p class="mt-3 text-sm text-mono-400">
+    Rust types are auto-generated via <code class="text-mono-200">prost</code> in <code class="text-mono-200">build.rs</code>. Import and use the generated types from <code class="text-mono-200">roamy_protocol::gen</code>.
+  </p>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Usage in JavaScript</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code set:html={codeJsProto} /></pre>
+  <p class="mt-3 text-sm text-mono-400">
+    The generated module provides static <code class="text-mono-200">Envelope.create()</code>, <code class="text-mono-200">Envelope.encode()</code>, and <code class="text-mono-200">Envelope.decode()</code> methods for browser and Node.js use.
+  </p>
+</DocsLayout>

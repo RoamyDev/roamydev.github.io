@@ -1,0 +1,41 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+const lang = 'zh';
+---
+
+<DocsLayout lang={lang}>
+  <h1 class="font-mono text-3xl font-bold text-mono-50">文档</h1>
+  <p class="mt-4 text-mono-400 leading-relaxed">
+    欢迎阅读 Roamy 文档。Roamy 是一个开源的会话运行时，可从任何设备访问终端会话。核心系统采用 Apache 2.0 协议。
+  </p>
+
+  <div class="mt-12 grid gap-6 sm:grid-cols-2">
+    <a href="/zh/docs/getting-started" class="rounded-lg border border-mono-800 bg-mono-900/30 p-6 transition-colors hover:border-mono-600">
+      <h2 class="font-mono text-lg font-medium text-mono-100">快速开始</h2>
+      <p class="mt-2 text-sm text-mono-400">构建并运行 sessiond，通过 Web 客户端或 CLI 连接。</p>
+    </a>
+    <a href="/zh/docs/runtime" class="rounded-lg border border-mono-800 bg-mono-900/30 p-6 transition-colors hover:border-mono-600">
+      <h2 class="font-mono text-lg font-medium text-mono-100">运行时 (sessiond)</h2>
+      <p class="mt-2 text-sm text-mono-400">会话守护进程：配置、命令行参数、TLS、认证和架构。</p>
+    </a>
+    <a href="/zh/docs/cli" class="rounded-lg border border-mono-800 bg-mono-900/30 p-6 transition-colors hover:border-mono-600">
+      <h2 class="font-mono text-lg font-medium text-mono-100">CLI</h2>
+      <p class="mt-2 text-sm text-mono-400"><code class="text-mono-200">roamy</code> 命令行工具，用于管理会话。</p>
+    </a>
+    <a href="/zh/docs/protocol" class="rounded-lg border border-mono-800 bg-mono-900/30 p-6 transition-colors hover:border-mono-600">
+      <h2 class="font-mono text-lg font-medium text-mono-100">协议</h2>
+      <p class="mt-2 text-sm text-mono-400">Protobuf 线路协议：信封、流、消息和版本控制。</p>
+    </a>
+    <a href="/zh/docs/web-client" class="rounded-lg border border-mono-800 bg-mono-900/30 p-6 transition-colors hover:border-mono-600">
+      <h2 class="font-mono text-lg font-medium text-mono-100">Web 客户端</h2>
+      <p class="mt-2 text-sm text-mono-400">基于 xterm.js 和 Protobuf.js 的浏览器终端客户端。</p>
+    </a>
+  </div>
+
+  <h2 class="mt-16 font-mono text-xl font-bold text-mono-100">开源仓库</h2>
+  <div class="mt-4 space-y-2 text-sm text-mono-400">
+    <p><a href="https://github.com/RoamyDev/roamy-protocol" class="text-mono-200 underline hover:text-mono-50">roamy-protocol</a> &mdash; Protobuf 线路协议定义</p>
+    <p><a href="https://github.com/RoamyDev/roamy-runtime" class="text-mono-200 underline hover:text-mono-50">roamy-runtime</a> &mdash; 会话守护进程、核心运行时和 CLI</p>
+    <p><a href="https://github.com/RoamyDev/roamy-web" class="text-mono-200 underline hover:text-mono-50">roamy-web</a> &mdash; 浏览器终端客户端</p>
+  </div>
+</DocsLayout>

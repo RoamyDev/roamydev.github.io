@@ -1,0 +1,108 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+const lang = 'zh';
+---
+
+<DocsLayout lang={lang}>
+  <h1 class="font-mono text-3xl font-bold text-mono-50">运行时 (sessiond)</h1>
+  <p class="mt-4 text-mono-400 leading-relaxed">
+    <code class="text-mono-200">sessiond</code> 是管理终端会话的核心守护进程。它监听 WebSocket 连接，创建基于 PTY 的会话，并将终端 I/O 流式传输给已连接的客户端。
+  </p>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">架构</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code>              ┌─────────────────┐
+  客户端 ───WS──▶│    sessiond      │──PTY──▶ Shell / 程序
+ (web/cli/      │  (会话守护进程)    │
+  mobile)       └────────┬─────────┘
+                         │
+                ┌────────▼─────────┐
+                │  roamy-runtime    │
+                │  (核心库)         │
+                │  - 会话管理       │
+                │  - 持久化         │
+                │  - PTY 抽象       │
+                └──────────────────┘</code></pre>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Workspace Crates</h2>
+  <div class="mt-4 overflow-x-auto">
+    <table class="w-full text-sm text-mono-400">
+      <thead><tr class="border-b border-mono-800 text-left"><th class="pb-2 pr-6 font-mono text-mono-200">Crate</th><th class="pb-2 font-mono text-mono-200">说明</th></tr></thead>
+      <tbody class="divide-y divide-mono-800/50">
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>sessiond</code></td><td class="py-2">运行时守护进程 &mdash; HTTP + WebSocket 服务器、会话生命周期、协议传输、TLS、认证</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>roamy-runtime</code></td><td class="py-2">核心库 &mdash; 会话管理、持久化、PTY 抽象（<code class="text-mono-200">PtyBackend</code> trait）</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>roamy-conpty</code></td><td class="py-2">Windows ConPTY 集成（伪终端后端）</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>roamy-pty-unix</code></td><td class="py-2">Unix PTY 集成（openpty/forkpty 后端）</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>roamy-cli</code></td><td class="py-2">终端会话管理 CLI（<code class="text-mono-200">roamy</code> 命令）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">命令行参数</h2>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code>sessiond                # 交互模式启动（日志输出到终端）
+sessiond --daemon       # 后台运行（仅 Unix）
+sessiond --no-tls       # 禁用 TLS（明文 WebSocket）
+sessiond --web-dir DIR  # 从目录提供 Web 资源</code></pre>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">配置</h2>
+  <p class="mt-3 text-sm text-mono-400">
+    sessiond 从 <code class="text-mono-200">~/.roamy/config.toml</code> 加载可选配置。环境变量始终优先于文件配置。
+  </p>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code># ~/.roamy/config.toml
+
+[server]
+host = "127.0.0.1"      # 绑定地址（环境变量：ROAMY_HOST）
+port = 9800              # 绑定端口（环境变量：ROAMY_PORT）
+shell = "/bin/bash"      # 默认 Shell（环境变量：ROAMY_SHELL）
+data_dir = "~/.local/share/roamy/sessions"  # 会话数据（环境变量：ROAMY_DATA_DIR）
+web_dir = "/path/to/roamy-web/dist"  # Web 资源（环境变量：ROAMY_WEB_DIR）
+
+[tls]
+enabled = true           # 启用 TLS（自动生成自签名证书）
+cert_path = ""           # PEM 证书（可选）
+key_path = ""            # PEM 私钥（可选）
+
+[daemon]
+idle_timeout_secs = 600  # 无活跃会话时自动退出</code></pre>
+
+  <h3 class="mt-8 font-mono text-lg font-medium text-mono-100">环境变量</h3>
+  <div class="mt-4 overflow-x-auto">
+    <table class="w-full text-sm text-mono-400">
+      <thead><tr class="border-b border-mono-800 text-left"><th class="pb-2 pr-6 font-mono text-mono-200">变量</th><th class="pb-2 pr-6 font-mono text-mono-200">默认值</th><th class="pb-2 font-mono text-mono-200">说明</th></tr></thead>
+      <tbody class="divide-y divide-mono-800/50">
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>ROAMY_HOST</code></td><td class="py-2 pr-6">127.0.0.1</td><td class="py-2">绑定地址</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>ROAMY_PORT</code></td><td class="py-2 pr-6">9800</td><td class="py-2">绑定端口</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>ROAMY_SHELL</code></td><td class="py-2 pr-6">pwsh.exe / /bin/sh</td><td class="py-2">默认 Shell</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>ROAMY_DATA_DIR</code></td><td class="py-2 pr-6">平台相关</td><td class="py-2">会话持久化目录</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>ROAMY_CONFIG</code></td><td class="py-2 pr-6">~/.roamy/config.toml</td><td class="py-2">配置文件路径</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>ROAMY_TOKEN_FILE</code></td><td class="py-2 pr-6">~/.roamy/token</td><td class="py-2">认证 token 文件</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>ROAMY_IDLE_TIMEOUT</code></td><td class="py-2 pr-6">600</td><td class="py-2">空闲超时（秒）</td></tr>
+        <tr><td class="py-2 pr-6 font-mono text-mono-100"><code>ROAMY_SOCKET</code></td><td class="py-2 pr-6">平台相关</td><td class="py-2">Unix 域套接字路径（仅 Unix）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">TLS</h2>
+  <p class="mt-3 text-sm text-mono-400">
+    TLS 默认启用，使用 <code class="text-mono-200">rustls</code>。如未提供证书，sessiond 启动时自动生成自签名证书。可通过配置提供自己的证书/密钥，或使用 <code class="text-mono-200">--no-tls</code> 禁用。
+  </p>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">认证</h2>
+  <p class="mt-3 text-sm text-mono-400">
+    远程客户端必须通过设备 token 认证。token 在首次运行时生成，存储在 <code class="text-mono-200">~/.roamy/token</code>（SHA-256 哈希，Unix 上权限 0600）。交互模式运行时，token 输出到 stderr 并嵌入 QR 码中便于客户端配对。
+  </p>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">会话持久化</h2>
+  <p class="mt-3 text-sm text-mono-400">
+    会话元数据以 JSON 文件（<code class="text-mono-200">&lt;session-id&gt;.json</code>）持久化到数据目录。每个会话还有一个 scrollback 文件（<code class="text-mono-200">&lt;session-id&gt;.scrollback</code>），使客户端重连时可以重放之前的输出。内存中 scrollback 上限 1 MB，自动修剪。
+  </p>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">守护进程模式（Unix）</h2>
+  <p class="mt-3 text-sm text-mono-400">
+    在 Unix 系统上，<code class="text-mono-200">sessiond --daemon</code> 通过 <code class="text-mono-200">setsid</code> fork 到后台运行，将 stdout/stderr 重定向到 <code class="text-mono-200">~/.roamy/logs/sessiond.log</code>，并管理 PID 文件。通过 SIGTERM/SIGINT 优雅关闭。
+  </p>
+
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Shell 钩子注入</h2>
+  <p class="mt-3 text-sm text-mono-400">
+    当检测到 Shell 为 PowerShell（<code class="text-mono-200">pwsh</code> 或 <code class="text-mono-200">powershell</code>）时，sessiond 自动注入启动钩子，上报工作目录变更和命令生命周期事件。这支持状态栏显示当前目录等功能。
+  </p>
+</DocsLayout>

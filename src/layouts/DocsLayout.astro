@@ -1,0 +1,70 @@
+---
+import Layout from './Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import type { UILanguage } from '../i18n/ui';
+
+interface Props {
+  lang: UILanguage;
+}
+
+const { lang } = Astro.props;
+
+const enNav = [
+  { href: '/docs/', label: 'Overview' },
+  { href: '/docs/getting-started', label: 'Getting Started' },
+  { href: '/docs/runtime', label: 'Runtime (sessiond)' },
+  { href: '/docs/cli', label: 'CLI' },
+  { href: '/docs/protocol', label: 'Protocol' },
+  { href: '/docs/web-client', label: 'Web Client' },
+];
+
+const zhNav = [
+  { href: '/zh/docs/', label: '概述' },
+  { href: '/zh/docs/getting-started', label: '快速开始' },
+  { href: '/zh/docs/runtime', label: '运行时 (sessiond)' },
+  { href: '/zh/docs/cli', label: 'CLI' },
+  { href: '/zh/docs/protocol', label: '协议' },
+  { href: '/zh/docs/web-client', label: 'Web 客户端' },
+];
+
+const nav = lang === 'zh' ? zhNav : enNav;
+
+const currentPath = Astro.url.pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '');
+---
+
+<Layout lang={lang}>
+  <Header lang={lang} />
+  <div class="flex flex-1">
+    <aside class="hidden w-56 shrink-0 border-r border-mono-800/50 bg-mono-950/50 lg:block">
+      <nav class="sticky top-16 p-4">
+        <ul class="space-y-1">
+          {nav.map((item) => {
+            const isActive = currentPath === item.href.replace(/\/$/, '') || (item.href !== `/${lang === 'zh' ? 'zh/' : ''}docs/` && currentPath.startsWith(item.href.replace(/\/$/, '')));
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={[
+                    'block rounded-md px-3 py-1.5 text-sm transition-colors',
+                    isActive
+                      ? 'bg-mono-800/50 font-medium text-mono-100'
+                      : 'text-mono-400 hover:bg-mono-800/30 hover:text-mono-200',
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </aside>
+    <main class="flex-1">
+      <article class="mx-auto max-w-3xl px-6 py-16 sm:px-8">
+        <slot />
+      </article>
+    </main>
+  </div>
+  <Footer lang={lang} />
+</Layout>
