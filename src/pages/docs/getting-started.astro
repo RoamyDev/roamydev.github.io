@@ -22,7 +22,7 @@ git clone https://github.com/RoamyDev/roamy-web.git</code></pre>
     Place them as sibling directories so <code class="text-mono-200">roamy-runtime</code> can find <code class="text-mono-200">roamy-protocol</code> via the workspace <code class="text-mono-200">path</code> dependency.
   </p>
 
-  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">2. Build and Run sessiond</h2>
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">2. Build and Run roamyd</h2>
   <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code># Set protoc path (example)
 export PROTOC="/usr/local/bin/protoc"   # Linux/macOS
 $env:PROTOC = "C:\protoc\bin\protoc.exe"  # Windows PowerShell
@@ -32,9 +32,9 @@ cd roamy-runtime
 cargo build
 
 # Run the session daemon (interactive mode)
-cargo run --bin sessiond</code></pre>
+cargo run --bin roamyd</code></pre>
   <p class="mt-3 text-sm text-mono-400">
-    When started interactively, sessiond prints a QR code pairing block in the terminal showing the connection URL, port, token, and QR code for mobile/web clients.
+    When started interactively, roamyd prints a QR code pairing block in the terminal showing the connection URL, port, token, and QR code for mobile/web clients.
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">3. Connect with the Web Client</h2>
@@ -46,7 +46,7 @@ npm run proto
 # Start dev server
 npm run dev</code></pre>
   <p class="mt-3 text-sm text-mono-400">
-    Open <code class="text-mono-200">http://localhost:3000</code> in your browser, enter the WebSocket URL displayed by sessiond (e.g. <code class="text-mono-200">ws://127.0.0.1:9800</code>), and click <strong class="text-mono-200">Connect</strong>.
+    Open <code class="text-mono-200">http://localhost:3000</code> in your browser, enter the WebSocket URL displayed by roamyd (e.g. <code class="text-mono-200">ws://127.0.0.1:9800</code>), and click <strong class="text-mono-200">Connect</strong>.
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">4. (Optional) Use the CLI</h2>
@@ -70,14 +70,14 @@ roamy join &lt;session-id&gt;</code></pre>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">5. Embedded Web Assets</h2>
   <p class="mt-3 text-sm text-mono-400">
-    To embed the web client directly into sessiond (single binary distribution), build with the <code class="text-mono-200">embed-web</code> feature:
+    To embed the web client directly into roamyd (single binary distribution), build with the <code class="text-mono-200">embed-web</code> feature:
   </p>
   <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code># Build roamy-web first
 cd roamy-web && npm run build
 
-# Copy dist into sessiond's expected location, then build with feature
-cargo build --bin sessiond --features embed-web</code></pre>
+# Copy dist into roamyd's expected location, then build with feature
+cargo build --bin roamyd --features embed-web</code></pre>
   <p class="mt-3 text-sm text-mono-400">
-    sessiond will serve the embedded web assets on the HTTP port, so you don't need a separate web server.
+    roamyd will serve the embedded web assets on the HTTP port, so you don't need a separate web server.
   </p>
 </DocsLayout>

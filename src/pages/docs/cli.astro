@@ -6,7 +6,7 @@ const lang = 'en';
 <DocsLayout lang={lang}>
   <h1 class="font-mono text-3xl font-bold text-mono-50">CLI</h1>
   <p class="mt-4 text-mono-400 leading-relaxed">
-    The <code class="text-mono-200">roamy</code> CLI is a terminal session manager that communicates with sessiond over a Unix domain socket (local) or WebSocket (remote).
+    The <code class="text-mono-200">roamy</code> CLI is a terminal session manager that communicates with roamyd over a Unix domain socket (local) or WebSocket (remote).
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Commands</h2>
@@ -15,14 +15,14 @@ roamy shell                   Launch default shell ($SHELL)
 roamy list                    List active sessions
 roamy join &lt;session-id&gt;       Reattach to existing session
 roamy kill &lt;session-id&gt;       Terminate a session
-roamy daemon start|stop|status  Manage sessiond daemon
+roamy daemon start|stop|status  Manage roamyd daemon
 roamy update [--open]         Check for updates (--open opens browser)
 roamy help                    Show help
 roamy version                 Show version</code></pre>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Session Lifecycle</h2>
   <ol class="mt-4 list-decimal space-y-2 pl-6 text-sm text-mono-400">
-    <li><strong class="text-mono-200">Create</strong> &mdash; <code class="text-mono-200">roamy shell</code> or <code class="text-mono-200">roamy &lt;program&gt;</code> creates a new PTY-backed session via sessiond.</li>
+    <li><strong class="text-mono-200">Create</strong> &mdash; <code class="text-mono-200">roamy shell</code> or <code class="text-mono-200">roamy &lt;program&gt;</code> creates a new PTY-backed session via roamyd.</li>
     <li><strong class="text-mono-200">Attach</strong> &mdash; Your terminal enters raw mode and proxies I/O to the session. Scrollback is replayed on attach.</li>
     <li><strong class="text-mono-200">Detach</strong> &mdash; Press <kbd class="rounded border border-mono-700 bg-mono-800 px-1.5 py-0.5 text-xs text-mono-300">Ctrl+]</kbd> then <kbd class="rounded border border-mono-700 bg-mono-800 px-1.5 py-0.5 text-xs text-mono-300">d</kbd>. The session keeps running in the background.</li>
     <li><strong class="text-mono-200">Reattach</strong> &mdash; <code class="text-mono-200">roamy join &lt;id&gt;</code> reconnects to the session with scrollback replay.</li>
@@ -30,16 +30,16 @@ roamy version                 Show version</code></pre>
   </ol>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Daemon Management</h2>
-  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code>roamy daemon start   # Start sessiond in background
-roamy daemon stop    # Send shutdown signal to sessiond
-roamy daemon status  # Check if sessiond is running</code></pre>
+  <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code>roamy daemon start   # Start roamyd in background
+roamy daemon stop    # Send shutdown signal to roamyd
+roamy daemon status  # Check if roamyd is running</code></pre>
   <p class="mt-3 text-sm text-mono-400">
-    On <code class="text-mono-200">daemon start</code>, the CLI locates the <code class="text-mono-200">sessiond</code> binary (same directory as <code class="text-mono-200">roamy</code> executable, or PATH) and spawns it with <code class="text-mono-200">--daemon</code>. A non-blocking update check runs after the daemon starts.
+    On <code class="text-mono-200">daemon start</code>, the CLI locates the <code class="text-mono-200">roamyd</code> binary (same directory as <code class="text-mono-200">roamy</code> executable, or PATH) and spawns it with <code class="text-mono-200">--daemon</code>. A non-blocking update check runs after the daemon starts.
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Connection</h2>
   <p class="mt-3 text-sm text-mono-400">
-    The CLI connects to sessiond via Unix domain socket on Unix (<code class="text-mono-200">$XDG_RUNTIME_DIR/roamy/sessiond.sock</code> or <code class="text-mono-200">ROAMY_SOCKET</code>). On Windows, it connects via the TCP WebSocket endpoint.
+    The CLI connects to roamyd via Unix domain socket on Unix (<code class="text-mono-200">$XDG_RUNTIME_DIR/roamy/roamyd.sock</code> or <code class="text-mono-200">ROAMY_SOCKET</code>). On Windows, it connects via the TCP WebSocket endpoint.
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Environment Variables</h2>

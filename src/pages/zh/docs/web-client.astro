@@ -27,7 +27,7 @@ const codeRoamyClient = `import { RoamyClient } from './client.js';
 
 const client = new RoamyClient();
 
-// 连接到 sessiond
+// 连接到 roamyd
 await client.connect('ws://127.0.0.1:9800');
 
 // 可选：认证
@@ -61,7 +61,7 @@ client.disconnect();`;
 <DocsLayout lang={lang}>
   <h1 class="font-mono text-3xl font-bold text-mono-50">Web 客户端</h1>
   <p class="mt-4 text-mono-400 leading-relaxed">
-    <code class="text-mono-200">roamy-web</code> 是一个基于浏览器的终端客户端，通过 WebSocket 连接到 sessiond。它使用 <a href="https://xtermjs.org/" class="text-mono-200 underline hover:text-mono-50">xterm.js</a> 提供完整的终端体验，并通过 Protobuf 线路协议通信。
+    <code class="text-mono-200">roamy-web</code> 是一个基于浏览器的终端客户端，通过 WebSocket 连接到 roamyd。它使用 <a href="https://xtermjs.org/" class="text-mono-200 underline hover:text-mono-50">xterm.js</a> 提供完整的终端体验，并通过 Protobuf 线路协议通信。
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">架构</h2>
@@ -100,7 +100,7 @@ client.disconnect();`;
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">QR 码自动连接</h2>
   <p class="mt-3 text-sm text-mono-400">
-    当 Web 客户端通过 QR 码 URL 参数打开时（<code class="text-mono-200">?host=&amp;port=&amp;token=&amp;scheme=</code>），会自动连接到 sessiond 实例。这实现了从 sessiond 打印的 QR 码无缝配对。
+    当 Web 客户端通过 QR 码 URL 参数打开时（<code class="text-mono-200">?host=&amp;port=&amp;token=&amp;scheme=</code>），会自动连接到 roamyd 实例。这实现了从 roamyd 打印的 QR 码无缝配对。
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">自动重连</h2>

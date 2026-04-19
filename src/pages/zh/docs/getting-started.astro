@@ -22,7 +22,7 @@ git clone https://github.com/RoamyDev/roamy-web.git</code></pre>
     将它们放在同一级目录下，这样 <code class="text-mono-200">roamy-runtime</code> 可以通过 workspace 的 <code class="text-mono-200">path</code> 依赖找到 <code class="text-mono-200">roamy-protocol</code>。
   </p>
 
-  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">2. 构建并运行 sessiond</h2>
+  <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">2. 构建并运行 roamyd</h2>
   <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code># 设置 protoc 路径（示例）
 export PROTOC="/usr/local/bin/protoc"   # Linux/macOS
 $env:PROTOC = "C:\protoc\bin\protoc.exe"  # Windows PowerShell
@@ -32,9 +32,9 @@ cd roamy-runtime
 cargo build
 
 # 运行会话守护进程（交互模式）
-cargo run --bin sessiond</code></pre>
+cargo run --bin roamyd</code></pre>
   <p class="mt-3 text-sm text-mono-400">
-    以交互模式启动时，sessiond 会在终端打印一个 QR 码配对信息块，显示连接 URL、端口、token 和 QR 码供移动端/Web 客户端使用。
+    以交互模式启动时，roamyd 会在终端打印一个 QR 码配对信息块，显示连接 URL、端口、token 和 QR 码供移动端/Web 客户端使用。
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">3. 通过 Web 客户端连接</h2>
@@ -46,7 +46,7 @@ npm run proto
 # 启动开发服务器
 npm run dev</code></pre>
   <p class="mt-3 text-sm text-mono-400">
-    在浏览器中打开 <code class="text-mono-200">http://localhost:3000</code>，输入 sessiond 显示的 WebSocket URL（如 <code class="text-mono-200">ws://127.0.0.1:9800</code>），点击 <strong class="text-mono-200">Connect</strong>。
+    在浏览器中打开 <code class="text-mono-200">http://localhost:3000</code>，输入 roamyd 显示的 WebSocket URL（如 <code class="text-mono-200">ws://127.0.0.1:9800</code>），点击 <strong class="text-mono-200">Connect</strong>。
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">4.（可选）使用 CLI</h2>
@@ -70,14 +70,14 @@ roamy join &lt;session-id&gt;</code></pre>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">5. 嵌入 Web 资源</h2>
   <p class="mt-3 text-sm text-mono-400">
-    要将 Web 客户端直接嵌入 sessiond（单二进制分发），使用 <code class="text-mono-200">embed-web</code> feature 构建：
+    要将 Web 客户端直接嵌入 roamyd（单二进制分发），使用 <code class="text-mono-200">embed-web</code> feature 构建：
   </p>
   <pre class="mt-4 overflow-x-auto rounded-lg border border-mono-800 bg-mono-900/50 p-4 font-mono text-sm text-mono-300"><code># 先构建 roamy-web
 cd roamy-web && npm run build
 
-# 将 dist 复制到 sessiond 期望的位置，然后构建
-cargo build --bin sessiond --features embed-web</code></pre>
+# 将 dist 复制到 roamyd 期望的位置，然后构建
+cargo build --bin roamyd --features embed-web</code></pre>
   <p class="mt-3 text-sm text-mono-400">
-    sessiond 会在 HTTP 端口提供嵌入的 Web 资源，无需单独的 Web 服务器。
+    roamyd 会在 HTTP 端口提供嵌入的 Web 资源，无需单独的 Web 服务器。
   </p>
 </DocsLayout>

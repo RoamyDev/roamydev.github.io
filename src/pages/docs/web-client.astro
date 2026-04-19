@@ -27,7 +27,7 @@ const codeRoamyClient = `import { RoamyClient } from './client.js';
 
 const client = new RoamyClient();
 
-// Connect to sessiond
+// Connect to roamyd
 await client.connect('ws://127.0.0.1:9800');
 
 // Optional: authenticate
@@ -61,7 +61,7 @@ client.disconnect();`;
 <DocsLayout lang={lang}>
   <h1 class="font-mono text-3xl font-bold text-mono-50">Web Client</h1>
   <p class="mt-4 text-mono-400 leading-relaxed">
-    <code class="text-mono-200">roamy-web</code> is a browser-based terminal client that connects to sessiond via WebSocket. It provides a full terminal experience powered by <a href="https://xtermjs.org/" class="text-mono-200 underline hover:text-mono-50">xterm.js</a> and communicates using the Protobuf wire protocol.
+    <code class="text-mono-200">roamy-web</code> is a browser-based terminal client that connects to roamyd via WebSocket. It provides a full terminal experience powered by <a href="https://xtermjs.org/" class="text-mono-200 underline hover:text-mono-50">xterm.js</a> and communicates using the Protobuf wire protocol.
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Architecture</h2>
@@ -100,7 +100,7 @@ client.disconnect();`;
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">QR Code Auto-Connect</h2>
   <p class="mt-3 text-sm text-mono-400">
-    When the web client is opened with URL parameters from a QR code (<code class="text-mono-200">?host=&amp;port=&amp;token=&amp;scheme=</code>), it automatically connects to the sessiond instance. This enables seamless pairing from the QR code printed by sessiond.
+    When the web client is opened with URL parameters from a QR code (<code class="text-mono-200">?host=&amp;port=&amp;token=&amp;scheme=</code>), it automatically connects to the roamyd instance. This enables seamless pairing from the QR code printed by roamyd.
   </p>
 
   <h2 class="mt-10 font-mono text-xl font-bold text-mono-100">Auto-Reconnect</h2>
