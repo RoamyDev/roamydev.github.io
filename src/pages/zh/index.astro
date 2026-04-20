@@ -1,147 +1,26 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
 
 const lang = 'zh';
 ---
 
 <Layout lang={lang}>
-  <Header lang={lang} />
-  
-  <main class="flex-1">
-    {/* Hero */}
-    <section class="relative overflow-hidden py-24 sm:py-32">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <h1 class="font-mono text-4xl font-bold tracking-tight text-mono-50 sm:text-6xl">
-            Roamy
-          </h1>
-          <p class="mx-auto mt-6 max-w-2xl text-xl leading-relaxed text-mono-300">
-            你的终端，随处可及。
-          </p>
-          <p class="mx-auto mt-4 max-w-3xl text-base text-mono-500">
-            一个开源的会话运行时，让你从手机、浏览器或任何设备访问终端会话 &mdash; 端到端加密，多设备支持。
-          </p>
-          <div class="mt-10 flex justify-center gap-4">
-            <a
-              href="https://github.com/RoamyDev"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="rounded-full border border-mono-600 bg-mono-900 px-5 py-2.5 text-sm font-medium text-mono-200 transition-colors hover:border-mono-400 hover:text-mono-50"
-            >
-              GitHub &rarr;
-            </a>
-            <span class="rounded-full border border-mono-800 bg-mono-950 px-5 py-2.5 text-sm text-mono-500">
-              正在积极开发中
-            </span>
-          </div>
-        </div>
+  <main class="flex-1 flex items-center justify-center min-h-screen">
+    <section class="text-center px-4">
+      <h1 class="font-mono text-5xl font-bold tracking-tight text-mono-50 sm:text-7xl">
+        Roamy
+      </h1>
+      <p class="mx-auto mt-6 max-w-xl text-lg text-mono-400">
+        全新产品，即将发布。
+      </p>
+      <div class="mt-12">
+        <span class="inline-block rounded-full border border-mono-700 bg-mono-900/50 px-6 py-3 text-sm text-mono-300">
+          Coming Soon
+        </span>
       </div>
-    </section>
-
-    {/* 问题与方案 */}
-    <section class="border-t border-mono-800/50 py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mx-auto max-w-3xl">
-          <h2 class="font-mono text-2xl font-bold text-mono-50">问题</h2>
-          <p class="mt-4 text-mono-400 leading-relaxed">
-            你 SSH 到远程服务器，启动了一个长时间运行的 AI Agent，然后想在手机上查看进度。或者你正在 lazygit 中操作，想在手机上用友好的界面批准一次合并，而不是盯着密密麻麻的终端输出。
-          </p>
-          <p class="mt-4 text-mono-400 leading-relaxed">
-            现有工具让你只能二选一：要么在手机上忍受微小的文字看完整终端，要么放弃，等回到电脑前再说。没有中间方案。
-          </p>
-          <h2 class="mt-12 font-mono text-2xl font-bold text-mono-50">方案</h2>
-          <p class="mt-4 text-mono-400 leading-relaxed">
-            Roamy 是一个<strong class="text-mono-200">会话运行时</strong>，它位于终端和你的设备之间。它捕获终端输出，通过 WebSocket 传输，并通过可扩展的适配器系统解析屏幕内容，识别<em>正在运行的程序</em>及其<em>当前状态</em>。
-          </p>
-          <p class="mt-4 text-mono-400 leading-relaxed">
-            客户端可以为识别到的程序渲染触控友好的交互界面，同时始终保留原始终端作为回退选项。运行时与客户端之间的所有流量均端到端加密。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    {/* 核心能力 */}
-    <section class="border-t border-mono-800/50 py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 class="text-center font-mono text-2xl font-bold text-mono-50">核心能力</h2>
-        <div class="mx-auto mt-12 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
-
-          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">跨平台客户端</h3>
-            <p class="mt-2 text-sm text-mono-400">
-              原生桌面端、Web 端和 iOS 客户端 &mdash; 随时随地从任何设备访问你的终端。每个客户端都针对各自平台优化。
-            </p>
-          </div>
-
-          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">端到端加密</h3>
-            <p class="mt-2 text-sm text-mono-400">
-              运行时与客户端之间的所有终端流量端到端加密。你的数据绝不以明文经过我们的服务器。
-            </p>
-          </div>
-
-          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">支持自部署</h3>
-            <p class="mt-2 text-sm text-mono-400">
-              在你自己的基础设施上运行。数据不经过我们的服务器 &mdash; 一切由你掌控。部署在防火墙后、本地机房或云端均可。
-            </p>
-          </div>
-
-          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">开源核心</h3>
-            <p class="mt-2 text-sm text-mono-400">
-              协议、运行时和 Web 客户端采用 Apache 2.0 协议。核心系统可独立用作远程终端方案。可审计、可 fork、可贡献。
-            </p>
-          </div>
-
-          <div class="rounded-lg border border-mono-800 bg-mono-900/30 p-6">
-            <h3 class="font-mono text-lg font-medium text-mono-100">远程会话</h3>
-            <p class="mt-2 text-sm text-mono-400">
-              持久化终端会话。随时从任何设备连接、断开、重连，不丢失状态。Rust 构建，性能可靠。
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    {/* 开源 */}
-    <section class="border-t border-mono-800/50 py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mx-auto max-w-3xl">
-          <h2 class="font-mono text-2xl font-bold text-mono-50">开源</h2>
-          <p class="mt-4 text-mono-400">
-            核心系统以 Apache 2.0 协议开源。正在积极开发中，欢迎 star 关注项目进展！
-          </p>
-          <div class="mt-8 space-y-3">
-            <a href="https://github.com/RoamyDev/roamy-protocol" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-lg border border-mono-800 bg-mono-900/30 px-5 py-3 transition-colors hover:border-mono-600">
-              <div>
-                <span class="font-mono text-sm font-medium text-mono-100">roamy-protocol</span>
-                <span class="ml-3 text-sm text-mono-500">Protobuf 线路协议定义</span>
-              </div>
-              <span class="rounded-full bg-mono-800 px-2 py-0.5 text-xs text-mono-400">Apache 2.0</span>
-            </a>
-            <a href="https://github.com/RoamyDev/roamy-runtime" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-lg border border-mono-800 bg-mono-900/30 px-5 py-3 transition-colors hover:border-mono-600">
-              <div>
-                <span class="font-mono text-sm font-medium text-mono-100">roamy-runtime</span>
-                <span class="ml-3 text-sm text-mono-500">会话守护进程 + 核心运行时</span>
-              </div>
-              <span class="rounded-full bg-mono-800 px-2 py-0.5 text-xs text-mono-400">Apache 2.0</span>
-            </a>
-            <a href="https://github.com/RoamyDev/roamy-web" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-lg border border-mono-800 bg-mono-900/30 px-5 py-3 transition-colors hover:border-mono-600">
-              <div>
-                <span class="font-mono text-sm font-medium text-mono-100">roamy-web</span>
-                <span class="ml-3 text-sm text-mono-500">浏览器终端客户端</span>
-              </div>
-              <span class="rounded-full bg-mono-800 px-2 py-0.5 text-xs text-mono-400">Apache 2.0</span>
-            </a>
-          </div>
-        </div>
-      </div>
+      <p class="mt-16 text-sm text-mono-600">
+        roamy.dev
+      </p>
     </section>
   </main>
-  
-  <Footer lang={lang} />
 </Layout>
